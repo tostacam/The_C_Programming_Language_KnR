@@ -48,19 +48,17 @@ int main(){
   unsigned int uint_max = ~0;
 
   printf("[int]\n");
-  printf("min: %d, max: %d\n", -int_max, int_max - 1);
+  printf("min: %d, max: %d\n", int_max, -(int_max - 1));
   printf("[unsigned int]\n");
   printf("min: %u, max: %u\n", 0, uint_max);
 
   // char
   char char_max = 1;
-  while(char_max > 0){
-    char_max = char_max * 2;
-  }
-  unsigned char uchar_max = ~0;
+  while(char_max++ > 0);
+  unsigned char uchar_max = (unsigned char)~0;
 
   printf("[char]\n");
-  printf("min: %d, max: %d\n", -char_max, char_max - 1);
+  printf("min: %d, max: %d\n", char_max - 1 , -char_max);
   printf("[unsigned char]\n");
   printf("min: %u, max: %u\n", 0, uchar_max);
 
