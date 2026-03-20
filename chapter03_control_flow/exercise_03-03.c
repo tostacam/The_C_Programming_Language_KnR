@@ -25,7 +25,7 @@ int main(){
   printf("%s -> expanded -> %s\n", s5, s6);
 }
 
-/* note: not testing for invalid ranges, i.e., a-9 */
+/* assumption: no invalid ranges exist; i.e., a-9 */
 int is_valid_char(char c){
   if(('a' <= c && c <= 'z')
     || ('A' <= c && c <= 'Z')
