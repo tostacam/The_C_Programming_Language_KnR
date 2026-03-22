@@ -58,7 +58,7 @@ int main(){
         if(op2 != 0.0)
           push((int)pop() % (int)op2);
         else
-          printf("error: zero modulu\ns");
+          printf("error: zero modulus\n");
         break;
       case '\n':
         printf("result = %.8g\n", pop());
