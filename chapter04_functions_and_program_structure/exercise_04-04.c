@@ -13,11 +13,13 @@
 #define NUMBER '0'  /* signal that a number was found */
 #define MAXVAL  100 /* maximum depth of val stack */
 #define BUFSIZE 100
+#define ERROR   1
 
 int sp = 0;         /* next free stack position */
 double val[MAXVAL]; /* value stack */
 char buf [BUFSIZE]; /* buffer for ungetch */
 int bufp = 0;       /* next free position in buf */
+int error_flag = 0;
 
 int getop(char []);
 void push(double);
@@ -32,60 +34,82 @@ int main(){
   char s[MAXOP];
 
   while((type = getop(s)) != EOF){
-    switch(type){
-      case NUMBER:
-        push(atof(s));
-        break;
-      case '+':
-        push(pop() + pop());
-        break;
-      case '*':
-        push(pop() * pop());
-        break;
-      case '-':
-        op2 = pop();
-        push(pop() - op2);
-        break;
-      case '/':
-        op2 = pop();
-        if(op2 != 0.0)
-          push(pop() / op2);
-        else
-          printf("error: zero divisor\n");
-        break;
-      case '%':
-        op2 = pop();
-        if(op2 != 0.0)
-          push((int)pop() % (int)op2);
-        else
-          printf("error: zero modulu\ns");
-        break;
-      case '?': /* print top element of the stack without popping */
-        if(sp > 0)
-          printf("stack top: %.2g\n", val[sp - 1]);
-        else
-          printf("stack empty\n");
-        break;
-      case 'd': /* duplicate top element of the stack */
-        op2 = pop();
-        push(op2);
-        push(op2);
-        break;
-      case 's': /* swap top two elements */
-        op2 = pop();
-        op1 = pop();
-        push(op2);
-        push(op1);
-        break;
-      case 'c': /* clear the stack */
-        sp = 0;
-        break;
-      case '\n':
-        printf("result = %.2g\n", pop());
-        break;
-      default:
-        printf("error: unknown command %s\n", s);
-        break;
+    if(error_flag){
+      printf(" (stopping program...) \n");
+      break;
+    }
+    else{
+      switch(type){
+        case NUMBER:
+          push(atof(s));
+          break;
+        case '+':
+          push(pop() + pop());
+          break;
+        case '*':
+          push(pop() * pop());
+          break;
+        case '-':
+          op2 = pop();
+          push(pop() - op2);
+          break;
+        case '/':
+          op2 = pop();
+          if(op2 != 0.0)
+            push(pop() / op2);
+          else
+            printf("error: zero divisor");
+            error_flag = ERROR;
+          break;
+        case '%':
+          op2 = pop();
+          if(op2 != 0.0)
+            push((int)pop() % (int)op2);
+          else
+            printf("error: zero modulus");
+            error_flag = ERROR;
+          break;
+        case '?': /* print top element of the stack without popping */
+          if(sp > 0)
+            printf("stack top: %.2g\n", val[sp - 1]);
+          else{
+            printf("error: can't query, stack empty");
+            error_flag = ERROR;
+          }
+          break;
+        case 'd': /* duplicate top element of the stack */
+          if(sp > 0){
+            op2 = pop();
+            push(op2);
+            push(op2);
+          }
+          else {
+            printf("error: no element to duplicate");
+            error_flag = ERROR;
+          }
+          break;
+        case 's': /* swap top two elements */
+          if(sp > 1){
+            op2 = pop();
+            op1 = pop();
+            push(op2);
+            push(op1);
+          }
+          else{
+            printf("error: can't swap, not enough elements");
+            error_flag = ERROR;
+          }
+          break;
+        case 'c': /* clear the stack */
+          sp = 0;
+          break;
+        case '\n':
+          printf("result = %.2g\n", pop());
+          break;
+        default:
+          printf("error: unknown command \'%s\'", s);
+          break;
+      }
     }
   }
 
@@ -96,8 +120,10 @@ int main(){
 void push (double f){
   if(sp < MAXVAL)
     val[sp++] = f;
-  else
-    printf("error: stack full, can't push %g\n", f);  
+  else{
+    printf("error: stack full, can't push %g", f);
+    error_flag = ERROR;
+  }
 }
 
 /* pop: pop and return top value from the stack */
@@ -105,7 +131,8 @@ double pop(void){
   if(sp > 0)
     return val[--sp];
   else{
-    printf("error: stack empty\n");
+    printf("error: stack empty");
+    error_flag = ERROR;
     return 0.0;
   }
 }
@@ -155,8 +182,10 @@ int getch(void){
 
 /* push a character back on input */
 void ungetch(int c){
-  if(bufp >= BUFSIZE)
-    printf("ungetch: too many characters\n");
+  if(bufp >= BUFSIZE){
+    printf("ungetch: too many characters");
+    error_flag = ERROR;
+  }
   else
     buf[bufp++] = c;
 }
