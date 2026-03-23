@@ -57,17 +57,19 @@ int main(){
           op2 = pop();
           if(op2 != 0.0)
             push(pop() / op2);
-          else
+          else{
             printf("error: zero divisor");
             error_flag = ERROR;
+          }
           break;
         case '%':
           op2 = pop();
           if(op2 != 0.0)
             push((int)pop() % (int)op2);
-          else
+          else{
             printf("error: zero modulus");
             error_flag = ERROR;
+          }
           break;
         case '?': /* print top element of the stack without popping */
           if(sp > 0)
