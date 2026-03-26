@@ -52,8 +52,8 @@ int main(int argc, char *argv[]){
 /* cmp_wrapper: return cmp value based on function and -r */
 int cmp_wrapper(const void *a, const void *b)
 {
-    int result = numeric ? numcmp(a, b) : strcmp(a, b);
-    return reverse ? -result : result;
+  int result = numeric ? numcmp(a, b) : strcmp(a, b);
+  return reverse ? -result : result;
 }
 
 /* qsort: sort v[left]...v[right] into increasing order */
