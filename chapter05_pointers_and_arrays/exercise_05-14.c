@@ -49,7 +49,7 @@ int main(int argc, char *argv[]){
   }
 }
 
-/* return cmp value based on function and */
+/* cmp_wrapper: return cmp value based on function and -r */
 int cmp_wrapper(const void *a, const void *b)
 {
     int result = numeric ? numcmp(a, b) : strcmp(a, b);
