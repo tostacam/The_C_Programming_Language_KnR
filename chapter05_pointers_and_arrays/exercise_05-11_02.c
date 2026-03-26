@@ -8,12 +8,12 @@
 #define TABSIZE 4
 
 int main(int argc, char *argv[]){
-  int c, col = 0, spaces, i = 1, j = 0;
+  int c, col = 0, spaces;
 
   // ./a.out $'hello\tworld'
 
-  while(--argc > 0){
-    while((c = argv[i][j++]) != '\0'){
+  while(--argc > 0 && ++argv){
+    while((c = *argv[0]++)){
       if(c == '\t'){
         spaces = TABSIZE - (col % TABSIZE);
         for(int k = 0; k < spaces; ++k){
@@ -30,6 +30,5 @@ int main(int argc, char *argv[]){
         ++col;
       }
     }
-    ++i;
   }
 }

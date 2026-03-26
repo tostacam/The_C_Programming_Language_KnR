@@ -10,13 +10,13 @@
 #define OUT 0
 
 int main(int argc, char *argv[]){
-  int c, col = 0, blanks = 0, i = 1, j = 0;
+  int c, col = 0, blanks = 0;
   int quo, rem;  
 
   // ./a.out "hello        world"
 
-  while(--argc > 0){
-    while((c = argv[i][j++]) != '\0'){
+  while(--argc > 0 && ++argv){
+    while((c = *argv[0]++)){
       if(c == ' '){
         ++blanks;
       }
@@ -40,6 +40,5 @@ int main(int argc, char *argv[]){
         putchar(c);
       }
     }
-    ++i;
   }  
 }
