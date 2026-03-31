@@ -1,8 +1,7 @@
 // 8.2 Low Level I/O-Read and Write
 
-//#include "syscalls.h"
+#include "syscalls.h"
 #include <unistd.h>
-#include <stdio.h>
 
 int getchar1(void), getchar2(void);
 

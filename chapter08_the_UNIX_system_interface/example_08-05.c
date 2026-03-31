@@ -13,6 +13,7 @@ FILE _iob[_OPEN_MAX] = {
 #define PERMS 0666  /* RW for owner, group, other */
 
 FILE *fopen_imp(char *name, char *mode);
+int _fillbuf(FILE *fp);
 
 int main(){
   FILE *fp = fopen_imp("test.txt", "r");
