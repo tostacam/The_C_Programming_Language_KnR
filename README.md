@@ -1,7 +1,7 @@
 # The C Programming Language (K&R)
 
-This repository contains sample code to most sections/sub-sections of the book
-as well as my solutions to most (if not all) problems of **"The C Programming 
+This repository contains sample code to most sections/sub-sections of the book,
+as well as, my solutions to most (if not all) problems of **"The C Programming 
 Language, 2nd Edition" by Brian W. Kernighan/Dennis M. Ritchie**.
 
 ## 📚 Book's Approach
