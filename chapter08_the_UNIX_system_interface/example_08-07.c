@@ -1,5 +1,4 @@
-// 8.7 Example-A Storage Allocator (fixed)
-// 8.7 Example-A Storage Allocator (fixed)
+// 8.7 Example-A Storage Allocator
 
 #include <stdio.h>
 #include <unistd.h>
